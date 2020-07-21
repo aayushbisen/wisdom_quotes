@@ -5,7 +5,7 @@ class Quote extends StatelessWidget {
   final String quote;
   final String author;
 
-  Quote({this.quote, this.author});
+  const Quote({this.quote, this.author});
 
   @override
   Widget build(BuildContext context) {
@@ -15,16 +15,16 @@ class Quote extends StatelessWidget {
         Text(
           quote,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 17,
             fontFamily: "Mali",
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Text(
-          " - " + author,
+          " - $author",
           textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: "Mali"),
+          style: const TextStyle(fontFamily: "Mali"),
         ),
       ],
     );

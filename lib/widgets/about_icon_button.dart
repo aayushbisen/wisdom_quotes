@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void _launchURL(String url) async {
+Future<void> _launchURL(String url) async {
   if (await canLaunch(url)) {
     await launch(url);
   } else {
@@ -18,7 +18,7 @@ class AboutIconButton extends StatelessWidget {
         showDialog(
           context: context,
           child: AboutDialog(
-            applicationIcon: Image(
+            applicationIcon: const Image(
               height: 50,
               width: 50,
               image: AssetImage("assets/app_icon.png"),
@@ -28,73 +28,73 @@ class AboutIconButton extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Text("✨ Quotes from"),
+                  const Text("✨ Quotes from"),
                   GestureDetector(
+                    onTap: () {
+                      _launchURL("https://github.com/lukePeavey/quotable");
+                    },
                     child: Text(
                       " Quotable",
                       style: TextStyle(
                         color: Colors.blue,
                       ),
                     ),
-                    onTap: () {
-                      _launchURL("https://github.com/lukePeavey/quotable");
-                    },
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 children: <Widget>[
-                  Text("🖥️ Get the code at"),
+                  const Text("🖥️ Get the code at"),
                   GestureDetector(
+                    onTap: () {
+                      _launchURL(
+                          "https://github.com/suvansh-rana/wisdom_quotes");
+                    },
                     child: Text(
                       " Github",
                       style: TextStyle(
                         color: Colors.blue,
                       ),
                     ),
-                    onTap: () {
-                      _launchURL(
-                          "https://github.com/suvansh-rana/wisdom_quotes");
-                    },
                   ),
                 ],
               ),
-              Divider(),
+              const Divider(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     "✍️ Created by",
                   ),
                   GestureDetector(
+                    onTap: () =>
+                        _launchURL("https://www.github.com/suvansh-rana"),
                     child: Text(
                       " Suvansh",
                       style: TextStyle(
                         color: Colors.blue,
                       ),
                     ),
-                    onTap: () =>
-                        _launchURL("https://www.github.com/suvansh-rana"),
                   ),
                 ],
               ),
-                Divider(),
+              const Divider(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     "🎁 Thanks to our",
                   ),
                   GestureDetector(
+                    onTap: () => _launchURL(
+                        "https://github.com/suvansh-rana/wisdom_quotes/graphs/contributors"),
                     child: Text(
                       " contributors !!",
                       style: TextStyle(
                         color: Colors.blue,
                       ),
                     ),
-                    onTap: () =>
-                        _launchURL("https://github.com/suvansh-rana/wisdom_quotes/graphs/contributors"),
                   ),
                 ],
               ),

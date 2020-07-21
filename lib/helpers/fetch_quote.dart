@@ -1,18 +1,19 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 List<String> allTags = ["wisdom", "life", "technology"];
 
 Future<Map<String, String>> getRandomQuote({String tag = "wisdom"}) async {
-  String url = "http://api.quotable.io/random?tags=$tag";
+  final String url = "http://api.quotable.io/random?tags=$tag";
 
-  http.Response res = await http.get(url);
+  final http.Response res = await http.get(url);
 
-  Map jsonResponse = jsonDecode(res.body);
+  final Map jsonResponse = jsonDecode(res.body) as Map;
 
   return {
-    "quoteKey": jsonResponse['_id'],
-    "quote": jsonResponse['content'],
-    "author": jsonResponse['author'],
+    "quoteKey": jsonResponse['_id'] as String,
+    "quote": jsonResponse['content'] as String,
+    "author": jsonResponse['author'] as String,
   };
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:wisdom_quotes/screens/quote_container.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wisdom_quotes/screens/quote_container.dart';
+
 import 'helpers/theme_defaults.dart';
 
 void main() => runApp(QuoteApp());
-
 
 // The root widget
 class QuoteApp extends StatefulWidget {
@@ -14,29 +14,27 @@ class QuoteApp extends StatefulWidget {
 }
 
 class _QuoteAppState extends State<QuoteApp> {
-
-
-  // Returns the theme mode users have choosen, 
-  // defaults to system settings   
+  // Returns the theme mode users have choosen,
+  // defaults to system settings
   Future<ThemeMode> getUserChoosenTheme() async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    int themeModeInt =
+    final int themeModeInt =
         prefs.getInt("THEME") ?? 1; // Return system theme as default
 
-    ThemeMode userChoosenThemeMode = themeMap[themeModeInt];
+    final ThemeMode userChoosenThemeMode = themeMap[themeModeInt];
 
     return userChoosenThemeMode;
   }
 
   // Set initial theme to the user choosen theme, when the app renders initially
-  void setInitialThemeMode() async {
-    ThemeMode userChoosenTheme = await getUserChoosenTheme();
+  Future<void> setInitialThemeMode() async {
+    final ThemeMode userChoosenTheme = await getUserChoosenTheme();
 
     Get.changeThemeMode(userChoosenTheme);
   }
 
+  @override
   void initState() {
     super.initState();
     setInitialThemeMode();
@@ -47,13 +45,13 @@ class _QuoteAppState extends State<QuoteApp> {
     return GetMaterialApp(
       title: 'Wisdom Quotes',
       theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.purple,
-        fontFamily: "average-sans",
-        accentColor: Colors.purple,
-        buttonColor: Colors.purple,
-        buttonTheme: ButtonThemeData(colorScheme: ColorScheme.light(primary: Colors.purple))
-      ),
+          brightness: Brightness.light,
+          primaryColor: Colors.purple,
+          fontFamily: "average-sans",
+          accentColor: Colors.purple,
+          buttonColor: Colors.purple,
+          buttonTheme: ButtonThemeData(
+              colorScheme: ColorScheme.light(primary: Colors.purple))),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         accentColor: Colors.purpleAccent,

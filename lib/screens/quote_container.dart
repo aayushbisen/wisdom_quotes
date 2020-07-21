@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wisdom_quotes/helpers/fetch_quote.dart';
+import 'package:get/get.dart';
+import 'package:share/share.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisdom_quotes/helpers/db_helper.dart';
+import 'package:wisdom_quotes/helpers/fetch_quote.dart';
+import 'package:wisdom_quotes/screens/quotes_list.dart';
 import 'package:wisdom_quotes/widgets/about_icon_button.dart';
 import 'package:wisdom_quotes/widgets/quote.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:share/share.dart';
-import 'package:wisdom_quotes/screens/quotes_list.dart';
 
 import '../helpers/db_helper.dart';
 
@@ -96,9 +96,9 @@ class _QuoteContainerState extends State<QuoteContainer> {
 
     // Set the new quote and auhtor as state
     setState(() {
-      quoteKey = data['quoteKey'];
-      quote = data['quote'];
-      author = data['author'];
+      quoteKey = data['quoteKey'] as String;
+      quote = data['quote'] as String;
+      author = data['author'] as String;
     });
     setQuoteSaved(quoteKey);
   }

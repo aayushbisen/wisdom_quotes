@@ -1,22 +1,22 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:path/path.dart';
 
 /// Database Definition and Operations are defined in this class.
 class DatabaseHelper {
-  static final _databaseName = 'MyDatabase.db';
-  static final _databaseVersion = 1;
+  static const _databaseName = 'MyDatabase.db';
+  static const _databaseVersion = 1;
 
-  static final table = 'my_quotes';
+  static const table = 'my_quotes';
 
-  static final columnId = '_id';
-  static final columnQuoteKey = 'quotekey';
-  static final columnName = 'author';
-  static final columnQuote = 'quote';
+  static const columnId = '_id';
+  static const columnQuoteKey = 'quotekey';
+  static const columnName = 'author';
+  static const String columnQuote = 'quote';
 
   DatabaseHelper._();
   static final DatabaseHelper instance = DatabaseHelper._();
@@ -28,20 +28,19 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database;
     // lazily instantiate the db the first time it is accessed
-    _database = await _initDatabase();
-    return _database;
+    return _database = await _initDatabase();
   }
 
   /// Database initialisation is done here.
   Future<Database> _initDatabase() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = join(directory.path, _databaseName);
-    return await openDatabase(path,
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String path = join(directory.path, _databaseName);
+    return openDatabase(path,
         version: _databaseVersion, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
-    String query = '''
+    const String query = '''
     CREATE TABLE $table (
             $columnId INTEGER PRIMARY KEY,
             $columnQuoteKey TEXT NOT NULL,
@@ -53,13 +52,13 @@ class DatabaseHelper {
   }
 
   Future<int> insert(Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    return await db.insert(table, row);
+    final Database db = await instance.database;
+    return db.insert(table, row);
   }
 
   Future<List<Map<String, dynamic>>> rowsWithThisKey(String quoteKey) async {
-    Database db = await instance.database;
-    return await db.query(
+    final Database db = await instance.database;
+    return db.query(
       table,
       columns: [columnQuoteKey],
       where: '$columnQuoteKey = ?',
@@ -68,16 +67,16 @@ class DatabaseHelper {
   }
 
   Future<List<Map<String, dynamic>>> queryAllRows() async {
-    Database db = await instance.database;
-    return await db.query(
+    final Database db = await instance.database;
+    return db.query(
       table,
       orderBy: '$columnId DESC',
     );
   }
 
   Future<int> delete(int id) async {
-    Database db = await instance.database;
-    return await db.delete(
+    final Database db = await instance.database;
+    return db.delete(
       table,
       where: '$columnId = ?',
       whereArgs: [id],
@@ -85,8 +84,8 @@ class DatabaseHelper {
   }
 
   Future<int> deleteByKey(String quoteKey) async {
-    Database db = await instance.database;
-    return await db.delete(
+    final Database db = await instance.database;
+    return db.delete(
       table,
       where: '$columnQuoteKey = ?',
       whereArgs: [quoteKey],
